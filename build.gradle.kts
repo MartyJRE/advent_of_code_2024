@@ -12,4 +12,9 @@ tasks {
     wrapper {
         gradleVersion = "8.11"
     }
+
+    compileJava {
+        sourceCompatibility = "22"
+        targetCompatibility = "22"
+    }
 }
