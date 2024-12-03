@@ -1,7 +1,7 @@
 import kotlin.math.abs
 
 fun main() {
-    fun part1(input: List<String>): Any {
+    fun part1(input: List<String>): Int {
         var safe = 0
         for (line in input) {
             val lineInt = line.split(" ").map { it.toInt() }
@@ -26,7 +26,7 @@ fun main() {
         return safe
     }
 
-    fun part2(input: List<String>): Any {
+    fun part2(input: List<String>): Int {
         fun iter(currInt: List<Int>): Boolean {
             val up = mutableListOf<Boolean>()
             val diffs = mutableListOf<Boolean>()
