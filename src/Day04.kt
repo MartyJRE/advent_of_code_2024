@@ -48,25 +48,25 @@ fun main() {
                 if (input[y][x] != 'A') {
                     continue
                 }
-                var all = ""
-                val northWest = input.getOrNull(y - 1)?.getOrNull(x - 1)
-                if (northWest != null) {
-                    all += northWest
+                var leftRight = ""
+                var rightLeft = ""
+                if (y - 1 >= 0) {
+                    if (x - 1 >= 0) {
+                        leftRight += input[y - 1][x - 1]
+                    }
+                    if (x + 1 < input[y - 1].length) {
+                        rightLeft += input[y - 1][x + 1]
+                    }
                 }
-                val northEast = input.getOrNull(y - 1)?.getOrNull(x + 1)
-                if (northEast != null) {
-                    all += northEast
+                if (y + 1 < input.size) {
+                    if (x - 1 >= 0) {
+                        rightLeft += input[y + 1][x - 1]
+                    }
+                    if (x + 1 < input[y + 1].length) {
+                        leftRight += input[y + 1][x + 1]
+                    }
                 }
-                val southWest = input.getOrNull(y + 1)?.getOrNull(x - 1)
-                if (southWest != null) {
-                    all += southWest
-                }
-                val southEast = input.getOrNull(y + 1)?.getOrNull(x + 1)
-                if (southEast != null) {
-                    all += southEast
-                }
-                all.println()
-                if (all.count { it == 'M' } == 2 && all.count { it == 'S' } == 2) {
+                if ((rightLeft == "MS" || rightLeft.reversed() == "MS") && (leftRight == "MS" || leftRight.reversed() == "MS")) {
                     cnt++
                 }
             }
