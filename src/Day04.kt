@@ -39,20 +39,48 @@ fun main() {
             }
         }
         return count
-
-
     }
 
     fun part2(input: List<String>): Int {
-        // :-(
-        return 0
+        var cnt = 0
+        for (y in input.indices) {
+            for (x in input.first().indices) {
+                if (input[y][x] != 'A') {
+                    continue
+                }
+                var all = ""
+                val northWest = input.getOrNull(y - 1)?.getOrNull(x - 1)
+                if (northWest != null) {
+                    all += northWest
+                }
+                val northEast = input.getOrNull(y - 1)?.getOrNull(x + 1)
+                if (northEast != null) {
+                    all += northEast
+                }
+                val southWest = input.getOrNull(y + 1)?.getOrNull(x - 1)
+                if (southWest != null) {
+                    all += southWest
+                }
+                val southEast = input.getOrNull(y + 1)?.getOrNull(x + 1)
+                if (southEast != null) {
+                    all += southEast
+                }
+                all.println()
+                if (all.count { it == 'M' } == 2 && all.count { it == 'S' } == 2) {
+                    cnt++
+                }
+            }
+        }
+        // 1949 too high :(
+        return cnt
     }
 
-    val testInput = readInput("Day04_test")
-    check(part1(testInput) == 18)
-//    check(part2(testInput) == 9)
+    val testInput1 = readInput("Day04_test01")
+    check(part1(testInput1) == 18)
+    val testInput2 = readInput("Day04_test02")
+    check(part2(testInput2) == 9)
 
     val input = readInput("Day04")
     part1(input).println()
-//    part2(input).println()
+    part2(input).println()
 }
