@@ -1,14 +1,18 @@
+import java.math.BigInteger
+
 fun main() {
-    fun part1(input: List<String>): Long {
-        var all = 0L
+    fun part1(input: List<String>): BigInteger {
+        var all = 0.toBigInteger()
         val parsed = input.associate {
             val parts = it.split(":")
-            parts.first().toLong() to parts
+            parts.first().toBigInteger() to parts
                 .last()
                 .trim()
                 .split(" ")
-                .map { it.toLong() }
+                .map { it.toBigInteger() }
+                .toMutableList()
         }
+
         for ((target, parts) in parsed) {
             var options = listOf('*', '+')
             val permutations = mutableListOf<String>()
@@ -33,27 +37,22 @@ fun main() {
                 if (idx < 0) break
 
             }
-            permutations.println()
             for (permutation in permutations) {
-                var option = 0L
+                var option = 0.toBigInteger()
                 for ((operatorIdx, operator) in permutation.withIndex()) {
-                    var left = if (option == 0L) parts[operatorIdx] else option
+                    var left = if (option == 0.toBigInteger()) parts[operatorIdx] else option
 //                    print(left)
                     var right = parts[operatorIdx + 1]
-                    option = if (operator == '+') {
-//                        println(" + $right")
-                        left + right
-                    } else {
-//                        println(" * $right")
-                        left * right
+                    option = when (operator) {
+                        '+' -> left.add(right)
+                        else -> left.multiply(right)
                     }
-//                    println("$target ? $option")
                 }
 
 //                permutation.println()
                 if (option == target) {
 //                    println("Found $target")
-                    all += target
+                    all = all.add(target)
                     break
                 }
 
@@ -69,7 +68,7 @@ fun main() {
     }
 
     val testInput = readInput("Day07_test")
-    check(part1(testInput) == 3749L)
+    check(part1(testInput) == 3749.toBigInteger())
 //    part2(testInput).println()
 //    check(part2(testInput) == 6)
 

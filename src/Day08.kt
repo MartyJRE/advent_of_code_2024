@@ -11,6 +11,7 @@ fun main() {
         }
         var problems = 0
         for ((_, locations) in map) {
+            val all = mutableListOf<Pair<Int, Int>>()
             for (location in locations) {
                 for (other in locations) {
                     if (location.first == other.first && location.second == other.second) {
@@ -18,31 +19,19 @@ fun main() {
                     }
                     var xDiff = location.first - other.first
                     var yDiff = location.second - other.second
-                    if (xDiff > 0) {
-                        xDiff *= -1
-                    }
-                    if (yDiff > 0) {
-                        yDiff *= -1
-                    }
-                    val one = Pair(other.first - xDiff, other.second - yDiff)
-                    if (
-                        one !in map.values.flatMap { it } &&
-                        one.first in 0 until input.first().length &&
-                        one.second in 0 until input.size
-                    ) {
-                        problems++
-                    }
-                    val two = Pair(location.first + xDiff, location.second + yDiff)
-                    if (
-                        two !in map.values.flatMap { it } &&
-                        two.first in 0 until input.first().length &&
-                        two.second in 0 until input.size
-                    ) {
-                        problems++
-                    }
+                    val one = Pair(location.first + xDiff, location.second + yDiff)
+                    val two = Pair(other.first - xDiff, other.second - yDiff)
+                    all.addAll(listOf(one, two))
                 }
             }
+
+            problems += all.count {
+                it !in map.flatMap { it.value } &&
+                        it.first >= 0 && it.first < input.first().length
+                        && it.second >= 0 && it.second < input.size
+            }
         }
+        problems.println()
         return problems
     }
 
